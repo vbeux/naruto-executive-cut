@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Naruto Executive Cut</title>
+<style>
+:root{--bg:#0f1115;--card:#171a21;--muted:#a7b0c0;--text:#f5f7fa;--accent:#ff8c42;--green:#35c759;--yellow:#f5c542;--red:#ff5a5f;--line:#2a2f3a}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);padding-bottom:calc(24px + env(safe-area-inset-bottom))}
+button,input{font:inherit}
+.wrap{max-width:920px;margin:0 auto;padding:20px}
+h1{margin:0 0 6px;font-size:30px;line-height:1.05}.sub{color:var(--muted);margin-bottom:18px;line-height:1.4}
+.next{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;position:sticky;top:8px;z-index:10;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.next small{color:var(--muted);display:block;margin-bottom:5px}.next strong{display:block;font-size:21px;line-height:1.2}.next .nextBtn{width:100%;margin-top:12px;border:0;background:var(--accent);color:#111;padding:13px 14px;border-radius:12px;font-weight:800;cursor:pointer;touch-action:manipulation}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px}.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.stat b{font-size:22px;display:block}.stat span{color:var(--muted);font-size:12px}.bar{height:10px;background:#242933;border-radius:999px;overflow:hidden;margin-top:9px}.bar>div{height:100%;width:0;background:var(--accent)}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 22px}.btn{min-height:46px;border:1px solid var(--line);background:#1d212a;color:var(--text);padding:10px 12px;border-radius:12px;cursor:pointer;touch-action:manipulation}
+.section{margin-top:26px}.section h2{font-size:22px;margin:0 0 10px}
+.item{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:9px 0;min-height:72px;touch-action:manipulation}.item.tap{cursor:pointer}.item.done{opacity:.5}.item input{width:24px;height:24px;margin:2px 0 0;accent-color:var(--accent)}
+.itemBody{min-width:0}.topline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:5px}.range{font-weight:800;font-size:17px}.desc{line-height:1.35}.meta{color:var(--muted);font-size:13px;margin-top:5px}.tag{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}.g{background:rgba(53,199,89,.14);color:#70e08a}.y{background:rgba(245,197,66,.13);color:#ffd966}.r{background:rgba(255,90,95,.12);color:#ff8b8f}
+.note{color:var(--muted);font-size:13px;margin-top:26px;line-height:1.5}
+@media(max-width:700px){
+ .wrap{padding:14px}.next{top:max(6px,env(safe-area-inset-top));border-radius:14px}.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}.controls{grid-template-columns:1fr}.btn{width:100%;font-size:15px}h1{font-size:28px}.section h2{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Naruto Executive Cut™</h1>
+  <div class="sub">Verde = obrigatório. Amarelo = opcional. Vermelho = pule sem dó.</div>
+
+  <div class="next" id="nextCard">
+    <small>Próximo bloco recomendado</small>
+    <strong id="nextText">Naruto 1–5</strong>
+    <button class="nextBtn" id="nextBtn" onclick="completeNext()">Marcar este bloco como assistido</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b id="watched">0</b><span>blocos concluídos</span></div>
+    <div class="stat"><b id="epsDone">0</b><span>episódios vistos</span></div>
+    <div class="stat"><b id="pct">0%</b><span>progresso do Executive Cut</span><div class="bar"><div id="bar"></div></div></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn" onclick="markAll(false)">Desmarcar tudo</button>
+    <button class="btn" onclick="markGreens()">Marcar obrigatórios</button>
+    <button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">Voltar ao topo</button>
+  </div>
+
+  <div id="content"></div>
+  <div class="note">O progresso fica salvo neste navegador. No celular, toque em qualquer parte do card para marcar/desmarcar.</div>
+</div>
+<script>
+const data = [
+{series:'Naruto clássico', items:[
+ ['1–5','g','Introdução, Time 7 e Kakashi'],['6–19','r','País das Ondas / Zabuza e Haku — pule no corte agressivo'],['20–25','g','Começo do Exame Chunin'],['27–50','g','Floresta + preliminares'],['51–57','y','Treinamento e preparação'],['58–80','g','Exame Chunin + Konoha Crush'],['81–85','g','Núcleo importante da história'],['86–96','y','Busca da Tsunade — bom, mas cortável'],['98–100','g','Fechamento necessário do arco'],['107–110','g','Retomada forte da trama principal'],['111–119','y','Perseguição — dá para comprimir'],['120–135','g','Fechamento real do clássico'],['136–219','r','Fillers / material dispensável'],['220','g','Transição para Shippuden']
+]},
+{series:'Naruto Shippuden', items:[
+ ['1–32','g','Retorno + resgate do Gaara / Akatsuki'],['33–56','y','Sai, Ponte Tenchi, Orochimaru e treino'],['57–71','r','Pule'],['72–88','g','Hidan e Kakuzu'],['89–112','r','Pule'],['113–126','g','Sasuke + eventos centrais'],['127–143','g','Jiraiya + Sasuke/Itachi'],['144–151','r','Pule'],['152–175','g','Pain — intocável'],['176–196','r','Pule'],['197–222','g','Five Kage Summit'],['223–242','r','Pule'],['243–249','g','Treino e preparação que valem a pena'],['250–256','y','Preparação adicional para a guerra'],['257–260','r','Pule'],['261–270','y','Início da guerra e lutas secundárias'],['271','r','Pule'],['272–278','y','Guerra com foco em coadjuvantes'],['279–281','r','Pule'],['282–283','y','Mais frentes secundárias da guerra'],['284–295','r','Pule'],['296–302','g','A guerra volta a ficar importante'],['303–320','r','Pule'],['321–346','g','Núcleo principal da guerra'],['347–361','r','Pule'],['362–375','g','Núcleo principal'],['376–377','r','Pule'],['378–387','g','Núcleo principal'],['388–390','r','Pule'],['391–393','g','Núcleo principal'],['394–413','r','Pule'],['414–415','g','História principal'],['416–417','r','Pule'],['418–421','g','História principal'],['422–423','r','Pule'],['424–426','g','História principal'],['427–450','r','Pule'],['451–463','y','Backstory importante, mas sacrificável'],['464–468','r','Pule'],['469–479','g','Reta final — não pule'],['480–483','r','Pule'],['484–500','y','Epílogo / novels — opcional']
+]}];
+function countRange(s){if(!s.includes('–')) return 1;const [a,b]=s.split('–').map(Number);return b-a+1}
+const watchable=[];data.forEach((sec,si)=>sec.items.forEach((it,ii)=>{if(it[1]!=='r')watchable.push({si,ii,range:it[0],eps:countRange(it[0]),series:sec.series,kind:it[1]})}));
+const totalEps=watchable.reduce((a,b)=>a+b.eps,0);const key='narutoExecutiveCutV1';let state={};try{state=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){state={}};let currentNext=null;
+function save(){try{localStorage.setItem(key,JSON.stringify(state))}catch(e){}}
+function render(){const c=document.getElementById('content');c.innerHTML='';data.forEach((sec,si)=>{const s=document.createElement('div');s.className='section';s.innerHTML=`<h2>${sec.series}</h2>`;sec.items.forEach((it,ii)=>{const [range,kind,desc]=it;const id=`${si}-${ii}`;const div=document.createElement('div');div.className='item'+(kind!=='r'?' tap':'')+(state[id]?' done':'');if(kind!=='r')div.onclick=(e)=>{if(e.target.tagName!=='INPUT')toggle(id)};const tag=kind==='g'?'<span class="tag g">OBRIGATÓRIO</span>':kind==='y'?'<span class="tag y">OPCIONAL</span>':'<span class="tag r">PULE</span>';div.innerHTML=`<input aria-label="Marcar ${range}" type="checkbox" ${kind==='r'?'disabled':''} ${state[id]?'checked':''} onchange="toggle('${id}')"><div class="itemBody"><div class="topline"><span class="range">${range}</span>${tag}</div><div class="desc">${desc}</div><div class="meta">${kind==='r'?'Fora do Executive Cut':countRange(range)+' episódio(s)'}</div></div>`;s.appendChild(div)});c.appendChild(s)});updateStats()}
+function toggle(id){state[id]=!state[id];save();render()}
+function updateStats(){let blocks=0,eps=0,next=null;for(const w of watchable){const id=`${w.si}-${w.ii}`;if(state[id]){blocks++;eps+=w.eps}else if(!next){next=w}}currentNext=next;document.getElementById('watched').textContent=blocks;document.getElementById('epsDone').textContent=eps;const pct=Math.round((eps/totalEps)*100);document.getElementById('pct').textContent=pct+'%';document.getElementById('bar').style.width=pct+'%';document.getElementById('nextText').textContent=next?`${next.series}: ${next.range}${next.kind==='y'?' (opcional)':''}`:'Concluído 🎉';document.getElementById('nextBtn').style.display=next?'block':'none'}
+function completeNext(){if(!currentNext)return;state[`${currentNext.si}-${currentNext.ii}`]=true;save();render();window.scrollTo({top:0,behavior:'smooth'})}
+function markAll(v){state={};if(v)watchable.forEach(w=>state[`${w.si}-${w.ii}`]=true);save();render()}
+function markGreens(){state={};data.forEach((sec,si)=>sec.items.forEach((it,ii)=>{if(it[1]==='g')state[`${si}-${ii}`]=true}));save();render()}
+render();
+</script>
+</body>
+</html>
